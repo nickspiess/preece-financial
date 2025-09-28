@@ -222,7 +222,7 @@ export const MinimalTheme: React.FC = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             <div className="relative group cursor-pointer">
               <div className="aspect-[3/4] overflow-hidden rounded">
-                <img src="/media/Austin.jpg" alt="Austin Preece" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src="/media/austin.webp" alt="Austin Preece" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur p-4 m-3 rounded border-l-4 border-[#62708A] transform translate-y-1 group-hover:translate-y-0 transition-transform">
                 <h4 className="text-lg font-light text-[#2C3E51] mb-1">Austin Preece, CFP®, EA</h4>
@@ -232,7 +232,7 @@ export const MinimalTheme: React.FC = () => {
 
             <div className="relative group cursor-pointer mt-8">
               <div className="aspect-[3/4] overflow-hidden rounded">
-                <img src="/media/Brooks.jpg" alt="Brooks Larson" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src="/media/brooks.jpg" alt="Brooks Larson" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur p-4 m-3 rounded border-l-4 border-[#95997D] transform translate-y-1 group-hover:translate-y-0 transition-transform">
                 <h4 className="text-lg font-light text-[#2C3E51] mb-1">Brooks Larson, AIF, ChFC, RICP</h4>
@@ -242,7 +242,7 @@ export const MinimalTheme: React.FC = () => {
 
             <div className="relative group cursor-pointer">
               <div className="aspect-[3/4] overflow-hidden rounded">
-                <img src="/media/Nolan.jpg" alt="Nolan Baier" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src="/media/nolan.webp" alt="Nolan Baier" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur p-4 m-3 rounded border-l-4 border-[#C48457] transform translate-y-1 group-hover:translate-y-0 transition-transform">
                 <h4 className="text-lg font-light text-[#2C3E51] mb-1">Nolan Baier</h4>
@@ -252,7 +252,7 @@ export const MinimalTheme: React.FC = () => {
 
             <div className="relative group cursor-pointer mt-8">
               <div className="aspect-[3/4] overflow-hidden rounded">
-                <img src="/media/Joe.jpg" alt="Joe Hoffart" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src="/media/joe.webp" alt="Joe Hoffart" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur p-4 m-3 rounded border-l-4 border-[#62708A] transform translate-y-1 group-hover:translate-y-0 transition-transform">
                 <h4 className="text-lg font-light text-[#2C3E51] mb-1">Joe Hoffart</h4>
