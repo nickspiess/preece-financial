@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 const BeforeLogin: React.FC = () => {
   console.log('BeforeLogin component rendering')
