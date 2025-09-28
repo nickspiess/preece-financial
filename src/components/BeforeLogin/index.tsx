@@ -1,9 +1,11 @@
-import * as React from 'react'
+'use client'
+
+import React, { useEffect } from 'react'
 
 const BeforeLogin: React.FC = () => {
   console.log('BeforeLogin component rendering')
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log('BeforeLogin component mounted')
     console.log('Environment check:', {
       serverUrl: process.env.NEXT_PUBLIC_SERVER_URL,
