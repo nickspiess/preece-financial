@@ -47,6 +47,82 @@
     --success: 196 52% 74%;
     --warning: 34 89% 85%;
     --error: 10 100% 86%;
+
+    --brand-primary: 149 153 125;
+    --brand-secondary: 161 181 184;
+    --brand-accent: 196 132 87;
+    --brand-dark: 44 62 81;
+    --brand-light: 227 211 189;
+  }
+
+  [data-brand-theme='professional'] {
+    --background: 0 0% 100%;
+    --foreground: 203 37% 24%;
+    --primary: 203 37% 24%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 203 37% 24%;
+    --accent: 196 132 87;
+    --accent-foreground: 0 0% 100%;
+    --card: 0 0% 98%;
+    --border: 203 20% 85%;
+    --hero-bg: linear-gradient(135deg, rgb(98, 112, 138) 0%, rgb(44, 62, 81) 100%);
+  }
+
+  [data-brand-theme='warm'] {
+    --background: 31 28% 92%;
+    --foreground: 21 52% 40%;
+    --primary: 21 52% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 149 153 125;
+    --secondary-foreground: 44 62 81;
+    --accent: 196 132 87;
+    --accent-foreground: 0 0% 100%;
+    --card: 0 0% 100%;
+    --border: 31 20% 80%;
+    --hero-bg: linear-gradient(135deg, rgb(227, 211, 189) 0%, rgb(196, 132, 87) 100%);
+  }
+
+  [data-brand-theme='minimal'] {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 15%;
+    --primary: 44 62 81;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 15%;
+    --accent: 161 181 184;
+    --accent-foreground: 44 62 81;
+    --card: 0 0% 99%;
+    --border: 0 0% 90%;
+    --hero-bg: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(161, 181, 184) 100%);
+  }
+
+  [data-brand-theme='bold'] {
+    --background: 203 37% 24%;
+    --foreground: 0 0% 100%;
+    --primary: 196 132 87;
+    --primary-foreground: 203 37% 24%;
+    --secondary: 149 153 125;
+    --secondary-foreground: 203 37% 24%;
+    --accent: 196 132 87;
+    --accent-foreground: 203 37% 24%;
+    --card: 203 30% 28%;
+    --border: 203 20% 40%;
+    --hero-bg: linear-gradient(135deg, rgb(44, 62, 81) 0%, rgb(98, 112, 138) 100%);
+  }
+
+  [data-brand-theme='nature'] {
+    --background: 47 16% 92%;
+    --foreground: 47 16% 25%;
+    --primary: 149 153 125;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 161 181 184;
+    --secondary-foreground: 44 62 81;
+    --accent: 149 153 125;
+    --accent-foreground: 0 0% 100%;
+    --card: 0 0% 100%;
+    --border: 47 12% 80%;
+    --hero-bg: linear-gradient(135deg, rgb(161, 181, 184) 0%, rgb(149, 153, 125) 100%);
   }
 
   [data-theme='dark'] {

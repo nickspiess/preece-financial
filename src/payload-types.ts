@@ -72,6 +72,10 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
+    home: Home;
+    'custom-pages': CustomPage;
+    testimonials: Testimonial;
+    faqs: Faq;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -88,6 +92,10 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    home: HomeSelect<false> | HomeSelect<true>;
+    'custom-pages': CustomPagesSelect<false> | CustomPagesSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    faqs: FaqsSelect<false> | FaqsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -98,7 +106,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: string;
+    defaultIDType: number;
   };
   globals: {
     header: Header;
@@ -146,7 +154,7 @@ export interface UserAuthOperations {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: string;
+  id: number;
   title: string;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
@@ -173,11 +181,11 @@ export interface Page {
             reference?:
               | ({
                   relationTo: 'pages';
-                  value: string | Page;
+                  value: number | Page;
                 } | null)
               | ({
                   relationTo: 'posts';
-                  value: string | Post;
+                  value: number | Post;
                 } | null);
             url?: string | null;
             label: string;
@@ -189,7 +197,7 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
-    media?: (string | null) | Media;
+    media?: (number | null) | Media;
   };
   layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
   meta?: {
@@ -197,7 +205,7 @@ export interface Page {
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
     description?: string | null;
   };
   publishedAt?: string | null;
@@ -212,9 +220,9 @@ export interface Page {
  * via the `definition` "posts".
  */
 export interface Post {
-  id: string;
+  id: number;
   title: string;
-  heroImage?: (string | null) | Media;
+  heroImage?: (number | null) | Media;
   content: {
     root: {
       type: string;
@@ -230,18 +238,18 @@ export interface Post {
     };
     [k: string]: unknown;
   };
-  relatedPosts?: (string | Post)[] | null;
-  categories?: (string | Category)[] | null;
+  relatedPosts?: (number | Post)[] | null;
+  categories?: (number | Category)[] | null;
   meta?: {
     title?: string | null;
     /**
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
     description?: string | null;
   };
   publishedAt?: string | null;
-  authors?: (string | User)[] | null;
+  authors?: (number | User)[] | null;
   populatedAuthors?:
     | {
         id?: string | null;
@@ -259,7 +267,7 @@ export interface Post {
  * via the `definition` "media".
  */
 export interface Media {
-  id: string;
+  id: number;
   alt?: string | null;
   caption?: {
     root: {
@@ -351,14 +359,14 @@ export interface Media {
  * via the `definition` "categories".
  */
 export interface Category {
-  id: string;
+  id: number;
   title: string;
   slug?: string | null;
   slugLock?: boolean | null;
-  parent?: (string | null) | Category;
+  parent?: (number | null) | Category;
   breadcrumbs?:
     | {
-        doc?: (string | null) | Category;
+        doc?: (number | null) | Category;
         url?: string | null;
         label?: string | null;
         id?: string | null;
@@ -372,7 +380,7 @@ export interface Category {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   name?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -420,11 +428,11 @@ export interface CallToActionBlock {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: string | Page;
+                value: number | Page;
               } | null)
             | ({
                 relationTo: 'posts';
-                value: string | Post;
+                value: number | Post;
               } | null);
           url?: string | null;
           label: string;
@@ -470,11 +478,11 @@ export interface ContentBlock {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: string | Page;
+                value: number | Page;
               } | null)
             | ({
                 relationTo: 'posts';
-                value: string | Post;
+                value: number | Post;
               } | null);
           url?: string | null;
           label: string;
@@ -495,7 +503,7 @@ export interface ContentBlock {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
-  media: string | Media;
+  media: number | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaBlock';
@@ -522,12 +530,12 @@ export interface ArchiveBlock {
   } | null;
   populateBy?: ('collection' | 'selection') | null;
   relationTo?: 'posts' | null;
-  categories?: (string | Category)[] | null;
+  categories?: (number | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
     | {
         relationTo: 'posts';
-        value: string | Post;
+        value: number | Post;
       }[]
     | null;
   id?: string | null;
@@ -539,7 +547,7 @@ export interface ArchiveBlock {
  * via the `definition` "FormBlock".
  */
 export interface FormBlock {
-  form: string | Form;
+  form: number | Form;
   enableIntro?: boolean | null;
   introContent?: {
     root: {
@@ -565,7 +573,7 @@ export interface FormBlock {
  * via the `definition` "forms".
  */
 export interface Form {
-  id: string;
+  id: number;
   title: string;
   fields?:
     | (
@@ -736,10 +744,319 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: number;
+  title: string;
+  hero: {
+    heading: string;
+    tagline: string;
+    heroImage?: (number | null) | Media;
+  };
+  whoWeServe?:
+    | {
+        title: string;
+        image: number | Media;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  services?:
+    | {
+        title: string;
+        description: string;
+        hoverColor: '#95997D' | '#62708A' | '#C48457';
+        id?: string | null;
+      }[]
+    | null;
+  about: {
+    heading: string;
+    description1: string;
+    description2: string;
+    categories?:
+      | {
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  team?:
+    | {
+        name: string;
+        credentials?: string | null;
+        title: string;
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  pricing?:
+    | {
+        title: string;
+        subtitle?: string | null;
+        description: string;
+        color: '#95997D' | '#62708A' | '#C48457';
+        tiers?:
+          | {
+              name: string;
+              description: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  contact: {
+    heading: string;
+    description: string;
+  };
+  /**
+   * Drag to reorder sections. Uncheck to hide sections.
+   */
+  sectionOrder?:
+    | {
+        section: 'hero' | 'whoWeServe' | 'services' | 'about' | 'team' | 'pricing' | 'contact';
+        enabled?: boolean | null;
+        customTitle?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  layoutSettings?: {
+    teamLayout?: ('grid-2x2' | 'grid-3col' | 'grid-4col' | 'list') | null;
+    servicesLayout?: ('cards' | 'list-borders' | 'list-simple') | null;
+    heroLayout?: ('centered' | 'left' | 'split-form') | null;
+    showConsultationSection?: boolean | null;
+    consultationPlacement?: ('after-hero' | 'before-footer' | 'in-hero') | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Create custom pages using drag-and-drop components. Build professional pages without coding!
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "custom-pages".
+ */
+export interface CustomPage {
+  id: number;
+  /**
+   * 🏷️ The main title of your page. This appears in the browser tab and as the page heading.
+   */
+  title: string;
+  /**
+   * 🔗 URL path for this page (e.g., "about-us" becomes /custom/about-us). Use lowercase and hyphens only.
+   */
+  slug: string;
+  /**
+   * 🎯 Build your page section by section! Drag sections to reorder them. Each section is like a building block for your page.
+   */
+  sections?:
+    | {
+        /**
+         * Choose the type of content section. Each type has different layout and content options.
+         */
+        blockType:
+          | 'hero'
+          | 'services'
+          | 'team'
+          | 'about'
+          | 'consultation'
+          | 'richText'
+          | 'cta'
+          | 'stats'
+          | 'imageGallery'
+          | 'testimonials'
+          | 'faq'
+          | 'contactInfo'
+          | 'spacer';
+        /**
+         * ⚙️ Customize how this section looks and feels. All settings are optional - use what you need!
+         */
+        sectionSettings?: {
+          /**
+           * 💡 Override the default section title. Great for adding custom headings like "Why Choose Us?" or "Our Process"
+           */
+          sectionTitle?: string | null;
+          /**
+           * 🎨 Choose a background color that matches your brand. Alternating colors creates visual variety.
+           */
+          backgroundColor?:
+            | ('bg-white' | 'bg-[#E3D3BD]/20' | 'bg-[#A1B5B8]/10' | 'bg-[#85896D]/10' | 'bg-[#2C3E51]' | 'bg-gray-50')
+            | null;
+          /**
+           * 📐 Control the vertical spacing above and below your section. Medium works well for most sections.
+           */
+          padding?: ('py-12' | 'py-20' | 'py-32' | 'py-0') | null;
+          /**
+           * ✏️ Choose text color to match your brand. Use white for dark backgrounds.
+           */
+          textColor?: ('text-[#2C3E51]' | 'text-[#62708A]' | 'text-[#95997D]' | 'text-white' | 'text-gray-900') | null;
+          /**
+           * 🎯 Choose accent color for buttons, borders, and highlights.
+           */
+          accentColor?: ('#62708A' | '#85896D' | '#A1B5B8' | '#95997D' | '#2C3E51') | null;
+          /**
+           * 🎯 How should your content be arranged? Works great for team members, services, testimonials, and galleries.
+           */
+          layout?: ('single' | 'two-col' | 'three-col' | 'four-col' | 'grid-2x2' | 'list') | null;
+          /**
+           * 📝 Main title for this section. Make it clear and compelling!
+           */
+          heading?: string | null;
+          /**
+           * 📄 Optional subtitle that appears below the main heading. Great for explanations or taglines.
+           */
+          subheading?: string | null;
+          /**
+           * ✏️ Rich text editor for detailed content. You can add formatting, links, lists, and more!
+           */
+          content?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          /**
+           * 🖼️ Upload an image for this section. Works well for hero sections, about sections, and image galleries.
+           */
+          image?: (number | null) | Media;
+          /**
+           * 🔘 Text that appears on buttons. Keep it action-oriented!
+           */
+          ctaText?: string | null;
+          /**
+           * 🔗 Where should the button go? Use URLs like "/contact" or "https://example.com" or "#section-id"
+           */
+          ctaLink?: string | null;
+          /**
+           * ⬜ Create visual breathing room between sections. Use spacers to separate different topics or create dramatic pauses.
+           */
+          spacerHeight?: ('h-12' | 'h-24' | 'h-48') | null;
+          /**
+           * 💬 Select specific testimonials to show, or leave empty to show all testimonials
+           */
+          testimonialsToShow?: (number | Testimonial)[] | null;
+          /**
+           * ❓ Select specific FAQs to show, or leave empty to show all FAQs
+           */
+          faqsToShow?: (number | Faq)[] | null;
+          /**
+           * 📂 Show only FAQs from a specific category
+           */
+          faqCategory?:
+            | ('all' | 'general' | 'services' | 'pricing' | 'process' | 'investment' | 'retirement' | 'insurance')
+            | null;
+          /**
+           * 🖼️ Select images for the gallery section
+           */
+          galleryImages?: (number | Media)[] | null;
+          /**
+           * 🏷️ Display captions below images in the gallery
+           */
+          showCaptions?: boolean | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage client testimonials that can be used in the page builder and throughout the site.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  /**
+   * 💬 The testimonial text from your client. Keep it authentic and specific!
+   */
+  quote: string;
+  /**
+   * 👤 Client name (first name and last initial works well for privacy)
+   */
+  author: string;
+  /**
+   * 💼 Client title or profession (optional but adds credibility)
+   */
+  position?: string | null;
+  /**
+   * ⭐ Star rating out of 5
+   */
+  rating?: number | null;
+  /**
+   * ⭐ Mark as featured to highlight this testimonial
+   */
+  featured?: boolean | null;
+  /**
+   * 📸 Optional client photo (with permission). Generic avatar images work too.
+   */
+  photo?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage frequently asked questions that can be used in the page builder and throughout the site.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: number;
+  /**
+   * ❓ The question your clients commonly ask
+   */
+  question: string;
+  /**
+   * 💡 Detailed answer to the question. You can use formatting, links, and lists.
+   */
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * 📂 Categorize questions to organize them better
+   */
+  category?: ('general' | 'services' | 'pricing' | 'process' | 'investment' | 'retirement' | 'insurance') | null;
+  /**
+   * ⭐ Mark as featured to show this FAQ prominently
+   */
+  featured?: boolean | null;
+  /**
+   * 🔢 Order for displaying (0 = first, higher numbers appear later)
+   */
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
-  id: string;
+  id: number;
   /**
    * You will need to rebuild the website when changing this field.
    */
@@ -749,11 +1066,11 @@ export interface Redirect {
     reference?:
       | ({
           relationTo: 'pages';
-          value: string | Page;
+          value: number | Page;
         } | null)
       | ({
           relationTo: 'posts';
-          value: string | Post;
+          value: number | Post;
         } | null);
     url?: string | null;
   };
@@ -765,8 +1082,8 @@ export interface Redirect {
  * via the `definition` "form-submissions".
  */
 export interface FormSubmission {
-  id: string;
-  form: string | Form;
+  id: number;
+  form: number | Form;
   submissionData?:
     | {
         field: string;
@@ -784,18 +1101,18 @@ export interface FormSubmission {
  * via the `definition` "search".
  */
 export interface Search {
-  id: string;
+  id: number;
   title?: string | null;
   priority?: number | null;
   doc: {
     relationTo: 'posts';
-    value: string | Post;
+    value: number | Post;
   };
   slug?: string | null;
   meta?: {
     title?: string | null;
     description?: string | null;
-    image?: (string | null) | Media;
+    image?: (number | null) | Media;
   };
   categories?:
     | {
@@ -813,7 +1130,7 @@ export interface Search {
  * via the `definition` "payload-jobs".
  */
 export interface PayloadJob {
-  id: string;
+  id: number;
   /**
    * Input data provided to the job
    */
@@ -905,52 +1222,68 @@ export interface PayloadJob {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: string;
+  id: number;
   document?:
     | ({
         relationTo: 'pages';
-        value: string | Page;
+        value: number | Page;
       } | null)
     | ({
         relationTo: 'posts';
-        value: string | Post;
+        value: number | Post;
       } | null)
     | ({
         relationTo: 'media';
-        value: string | Media;
+        value: number | Media;
       } | null)
     | ({
         relationTo: 'categories';
-        value: string | Category;
+        value: number | Category;
       } | null)
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
+      } | null)
+    | ({
+        relationTo: 'home';
+        value: number | Home;
+      } | null)
+    | ({
+        relationTo: 'custom-pages';
+        value: number | CustomPage;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'faqs';
+        value: number | Faq;
       } | null)
     | ({
         relationTo: 'redirects';
-        value: string | Redirect;
+        value: number | Redirect;
       } | null)
     | ({
         relationTo: 'forms';
-        value: string | Form;
+        value: number | Form;
       } | null)
     | ({
         relationTo: 'form-submissions';
-        value: string | FormSubmission;
+        value: number | FormSubmission;
       } | null)
     | ({
         relationTo: 'search';
-        value: string | Search;
+        value: number | Search;
       } | null)
     | ({
         relationTo: 'payload-jobs';
-        value: string | PayloadJob;
+        value: number | PayloadJob;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -960,10 +1293,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: string;
+  id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -983,7 +1316,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: string;
+  id: number;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -1293,6 +1626,165 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  title?: T;
+  hero?:
+    | T
+    | {
+        heading?: T;
+        tagline?: T;
+        heroImage?: T;
+      };
+  whoWeServe?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+        id?: T;
+      };
+  services?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        hoverColor?: T;
+        id?: T;
+      };
+  about?:
+    | T
+    | {
+        heading?: T;
+        description1?: T;
+        description2?: T;
+        categories?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  team?:
+    | T
+    | {
+        name?: T;
+        credentials?: T;
+        title?: T;
+        image?: T;
+        id?: T;
+      };
+  pricing?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        description?: T;
+        color?: T;
+        tiers?:
+          | T
+          | {
+              name?: T;
+              description?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  contact?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+      };
+  sectionOrder?:
+    | T
+    | {
+        section?: T;
+        enabled?: T;
+        customTitle?: T;
+        id?: T;
+      };
+  layoutSettings?:
+    | T
+    | {
+        teamLayout?: T;
+        servicesLayout?: T;
+        heroLayout?: T;
+        showConsultationSection?: T;
+        consultationPlacement?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "custom-pages_select".
+ */
+export interface CustomPagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  sections?:
+    | T
+    | {
+        blockType?: T;
+        sectionSettings?:
+          | T
+          | {
+              sectionTitle?: T;
+              backgroundColor?: T;
+              padding?: T;
+              textColor?: T;
+              accentColor?: T;
+              layout?: T;
+              heading?: T;
+              subheading?: T;
+              content?: T;
+              image?: T;
+              ctaText?: T;
+              ctaLink?: T;
+              spacerHeight?: T;
+              testimonialsToShow?: T;
+              faqsToShow?: T;
+              faqCategory?: T;
+              galleryImages?: T;
+              showCaptions?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  quote?: T;
+  author?: T;
+  position?: T;
+  rating?: T;
+  featured?: T;
+  photo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs_select".
+ */
+export interface FaqsSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  category?: T;
+  featured?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects_select".
  */
 export interface RedirectsSelect<T extends boolean = true> {
@@ -1551,7 +2043,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "header".
  */
 export interface Header {
-  id: string;
+  id: number;
   navItems?:
     | {
         link: {
@@ -1560,11 +2052,11 @@ export interface Header {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: string | Page;
+                value: number | Page;
               } | null)
             | ({
                 relationTo: 'posts';
-                value: string | Post;
+                value: number | Post;
               } | null);
           url?: string | null;
           label: string;
@@ -1580,7 +2072,7 @@ export interface Header {
  * via the `definition` "footer".
  */
 export interface Footer {
-  id: string;
+  id: number;
   navItems?:
     | {
         link: {
@@ -1589,11 +2081,11 @@ export interface Footer {
           reference?:
             | ({
                 relationTo: 'pages';
-                value: string | Page;
+                value: number | Page;
               } | null)
             | ({
                 relationTo: 'posts';
-                value: string | Post;
+                value: number | Post;
               } | null);
           url?: string | null;
           label: string;
@@ -1661,14 +2153,14 @@ export interface TaskSchedulePublish {
     doc?:
       | ({
           relationTo: 'pages';
-          value: string | Page;
+          value: number | Page;
         } | null)
       | ({
           relationTo: 'posts';
-          value: string | Post;
+          value: number | Post;
         } | null);
     global?: string | null;
-    user?: (string | null) | User;
+    user?: (number | null) | User;
   };
   output?: unknown;
 }
