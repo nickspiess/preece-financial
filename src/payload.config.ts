@@ -39,6 +39,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     user: Users.slug,
+    buildPath: '/admin',
     livePreview: {
       breakpoints: [
         {
