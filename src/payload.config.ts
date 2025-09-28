@@ -25,6 +25,15 @@ import { getServerSideURL } from './utilities/getURL'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+console.log('Payload config loading...')
+console.log('Environment variables:', {
+  DATABASE_URI: process.env.DATABASE_URI ? 'SET' : 'MISSING',
+  PAYLOAD_SECRET: process.env.PAYLOAD_SECRET ? 'SET' : 'MISSING',
+  NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
+  BLOB_READ_WRITE_TOKEN: process.env.BLOB_READ_WRITE_TOKEN ? 'SET' : 'MISSING',
+  NODE_ENV: process.env.NODE_ENV
+})
+
 export default buildConfig({
   admin: {
     components: {
@@ -34,6 +43,8 @@ export default buildConfig({
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeDashboard: ['@/components/BeforeDashboard'],
+      afterLogin: ['@/components/ErrorBoundary'],
+      beforeNavLinks: ['@/components/GlobalErrorHandler'],
     },
     importMap: {
       baseDir: path.resolve(dirname),
