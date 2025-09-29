@@ -6,6 +6,7 @@ import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import { homeStatic } from '@/endpoints/seed/home-static'
+import { getCachedPageBySlug, getCachedAllPages } from '@/utilities/cache'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
@@ -14,19 +15,9 @@ import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise })
-  const pages = await payload.find({
-    collection: 'pages',
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-    pagination: false,
-    select: {
-      slug: true,
-    },
-  })
+  const pages = await getCachedAllPages()
 
-  const params = pages.docs
+  const params = pages
     ?.filter((doc) => {
       return doc.slug !== 'home'
     })
@@ -34,7 +25,7 @@ export async function generateStaticParams() {
       return { slug }
     })
 
-  return params
+  return params || []
 }
 
 type Args = {
@@ -50,13 +41,15 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   let page: RequiredDataFromCollectionSlug<'pages'> | null
 
-  page = await queryPageBySlug({
-    slug,
-  })
-
   // Force use of static content for home page (Spiess Technologies content)
   if (slug === 'home') {
     page = homeStatic
+  } else if (draft) {
+    // Use non-cached query for draft mode
+    page = await queryPageBySlug({ slug })
+  } else {
+    // Use cached query for production
+    page = await getCachedPageBySlug(slug, false)
   }
 
   if (!page) {

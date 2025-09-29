@@ -1,25 +1,12 @@
 import React from 'react'
-import { getPayload } from 'payload'
-import config from '@payload-config'
 import { HeroImageToggle } from '@/components/HeroImageToggle'
 import { NaturalServiceCard } from '@/components/NaturalServiceCard'
 import { NaturalPricingSection } from '@/components/NaturalPricingSection'
 import { Header } from '@/components/Header'
+import { getCachedHomeData } from '@/utilities/cache'
 
 export default async function NaturalHomePage() {
-  const payload = await getPayload({ config })
-
-  const homeData = await payload.find({
-    collection: 'home',
-    limit: 1,
-    populate: {
-      'hero.heroImage': true,
-      'whoWeServe.image': true,
-      'team.image': true,
-    },
-  })
-
-  const home = homeData.docs[0]
+  const home = await getCachedHomeData()
 
   if (!home) {
     return (

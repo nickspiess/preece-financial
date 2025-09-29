@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
+import { revalidateCacheAfterChange, revalidateCacheAfterDelete } from '../hooks/revalidateCache'
 
 export const Home: CollectionConfig = {
   slug: 'home',
@@ -14,6 +15,10 @@ export const Home: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Content',
+  },
+  hooks: {
+    afterChange: [revalidateCacheAfterChange],
+    afterDelete: [revalidateCacheAfterDelete],
   },
   fields: [
     {

@@ -3,6 +3,7 @@ import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'paylo
 import { revalidatePath, revalidateTag } from 'next/cache'
 
 import type { Page } from '../../../payload-types'
+import { CACHE_TAGS } from '@/utilities/cache'
 
 export const revalidatePage: CollectionAfterChangeHook<Page> = ({
   doc,
@@ -17,6 +18,8 @@ export const revalidatePage: CollectionAfterChangeHook<Page> = ({
 
       revalidatePath(path)
       revalidateTag('pages-sitemap')
+      // Also revalidate our custom cache tag
+      revalidateTag(CACHE_TAGS.pages)
     }
 
     // If the page was previously published, we need to revalidate the old path
@@ -27,6 +30,8 @@ export const revalidatePage: CollectionAfterChangeHook<Page> = ({
 
       revalidatePath(oldPath)
       revalidateTag('pages-sitemap')
+      // Also revalidate our custom cache tag
+      revalidateTag(CACHE_TAGS.pages)
     }
   }
   return doc
@@ -37,6 +42,8 @@ export const revalidateDelete: CollectionAfterDeleteHook<Page> = ({ doc, req: { 
     const path = doc?.slug === 'home' ? '/' : `/${doc?.slug}`
     revalidatePath(path)
     revalidateTag('pages-sitemap')
+    // Also revalidate our custom cache tag
+    revalidateTag(CACHE_TAGS.pages)
   }
 
   return doc
