@@ -1,4 +1,6 @@
 import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
+import fs from 'fs'
+import path from 'path'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
@@ -12,12 +14,12 @@ import { post3 } from './post-3'
 
 const collections: CollectionSlug[] = [
   'categories',
-  'media',
   'pages',
   'posts',
   'forms',
   'form-submissions',
   'search',
+  'media', // Media last to handle foreign key constraints
 ]
 const globals: GlobalSlug[] = ['header', 'footer']
 
@@ -34,37 +36,9 @@ export const seed = async ({
 }): Promise<void> => {
   payload.logger.info('Seeding database...')
 
-  // we need to clear the media directory before seeding
-  // as well as the collections and globals
-  // this is because while `yarn seed` drops the database
-  // the custom `/api/seed` endpoint does not
-  payload.logger.info(`— Clearing collections and globals...`)
-
-  // clear the database
-  await Promise.all(
-    globals.map((global) =>
-      payload.updateGlobal({
-        slug: global,
-        data: {
-          navItems: [],
-        },
-        depth: 0,
-        context: {
-          disableRevalidate: true,
-        },
-      }),
-    ),
-  )
-
-  await Promise.all(
-    collections.map((collection) => payload.db.deleteMany({ collection, req, where: {} })),
-  )
-
-  await Promise.all(
-    collections
-      .filter((collection) => Boolean(payload.collections[collection].config.versions))
-      .map((collection) => payload.db.deleteVersions({ collection, req, where: {} })),
-  )
+  // Skip clearing existing data to avoid foreign key constraints
+  // Just add the missing images to the media collection
+  payload.logger.info(`— Checking for existing media and adding missing images...`)
 
   payload.logger.info(`— Seeding demo author and user...`)
 
@@ -80,7 +54,7 @@ export const seed = async ({
 
   payload.logger.info(`— Seeding media...`)
 
-  const [image1Buffer, image2Buffer, image3Buffer, hero1Buffer] = await Promise.all([
+  const [image1Buffer, image2Buffer, image3Buffer, hero1Buffer, ...teamPhotoBuffers] = await Promise.all([
     fetchFileByURL(
       'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-post1.webp',
     ),
@@ -93,9 +67,39 @@ export const seed = async ({
     fetchFileByURL(
       'https://raw.githubusercontent.com/payloadcms/payload/refs/heads/main/templates/website/src/endpoints/seed/image-hero1.webp',
     ),
+    // Team photos from local public/media directory
+    fetchLocalFile('public/media/retirees.webp'),
+    fetchLocalFile('public/media/nolan.webp'),
+    fetchLocalFile('public/media/joe.webp'),
+    fetchLocalFile('public/media/brooks.webp'),
+    fetchLocalFile('public/media/austin.webp'),
+    fetchLocalFile('public/media/realestate.webp'),
+    fetchLocalFile('public/media/entrepreneur.webp'),
+    fetchLocalFile('public/media/briefcase.webp'),
   ])
 
-  const [demoAuthor, image1Doc, image2Doc, image3Doc, imageHomeDoc] = await Promise.all([
+  const [retireesBuffer, nolanBuffer, joeBuffer, brooksBuffer, austinBuffer, realestateBuffer, entrepreneurBuffer, briefcaseBuffer] = teamPhotoBuffers
+
+  // Check for existing images to avoid duplicates
+  const teamImageNames = ['retirees.webp', 'nolan.webp', 'joe.webp', 'brooks.webp', 'austin.webp', 'realestate.webp', 'entrepreneur.webp', 'briefcase.webp']
+  const existingImages = await payload.find({
+    collection: 'media',
+    where: {
+      filename: {
+        in: teamImageNames,
+      },
+    },
+  })
+
+  payload.logger.info(`Found ${existingImages.docs.length} existing team images`)
+
+  const imagesToCreate = teamImageNames.filter(name =>
+    !existingImages.docs.some(doc => doc.filename === name)
+  )
+
+  payload.logger.info(`Will create ${imagesToCreate.length} missing team images: ${imagesToCreate.join(', ')}`)
+
+  const [demoAuthor, image1Doc, image2Doc, image3Doc, imageHomeDoc, ...teamPhotoDocs] = await Promise.all([
     payload.create({
       collection: 'users',
       data: {
@@ -124,6 +128,48 @@ export const seed = async ({
       data: imageHero1,
       file: hero1Buffer,
     }),
+
+    // Team photos - only create missing ones
+    ...(imagesToCreate.includes('retirees.webp') ? [payload.create({
+      collection: 'media',
+      data: { alt: 'Retirees' },
+      file: retireesBuffer,
+    })] : []),
+    ...(imagesToCreate.includes('nolan.webp') ? [payload.create({
+      collection: 'media',
+      data: { alt: 'Nolan' },
+      file: nolanBuffer,
+    })] : []),
+    ...(imagesToCreate.includes('joe.webp') ? [payload.create({
+      collection: 'media',
+      data: { alt: 'Joe' },
+      file: joeBuffer,
+    })] : []),
+    ...(imagesToCreate.includes('brooks.webp') ? [payload.create({
+      collection: 'media',
+      data: { alt: 'Brooks' },
+      file: brooksBuffer,
+    })] : []),
+    ...(imagesToCreate.includes('austin.webp') ? [payload.create({
+      collection: 'media',
+      data: { alt: 'Austin' },
+      file: austinBuffer,
+    })] : []),
+    ...(imagesToCreate.includes('realestate.webp') ? [payload.create({
+      collection: 'media',
+      data: { alt: 'Real Estate' },
+      file: realestateBuffer,
+    })] : []),
+    ...(imagesToCreate.includes('entrepreneur.webp') ? [payload.create({
+      collection: 'media',
+      data: { alt: 'Entrepreneur' },
+      file: entrepreneurBuffer,
+    })] : []),
+    ...(imagesToCreate.includes('briefcase-1.webp') ? [payload.create({
+      collection: 'media',
+      data: { alt: 'Briefcase' },
+      file: briefcaseBuffer,
+    })] : []),
 
     payload.create({
       collection: 'categories',
@@ -359,5 +405,33 @@ async function fetchFileByURL(url: string): Promise<File> {
     data: Buffer.from(data),
     mimetype: `image/${url.split('.').pop()}`,
     size: data.byteLength,
+  }
+}
+
+async function fetchLocalFile(filePath: string): Promise<File> {
+  const fullPath = path.resolve(process.cwd(), filePath)
+
+  if (!fs.existsSync(fullPath)) {
+    throw new Error(`Local file not found: ${fullPath}`)
+  }
+
+  const data = fs.readFileSync(fullPath)
+  const fileName = path.basename(filePath)
+  const extension = path.extname(fileName).toLowerCase()
+
+  // Map file extensions to MIME types
+  const mimeTypeMap: Record<string, string> = {
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.png': 'image/png',
+    '.webp': 'image/webp',
+    '.gif': 'image/gif',
+  }
+
+  return {
+    name: fileName,
+    data: Buffer.from(data),
+    mimetype: mimeTypeMap[extension] || 'image/jpeg',
+    size: data.length,
   }
 }

@@ -54,8 +54,8 @@ export default async function Page({ params: paramsPromise }: Args) {
     slug,
   })
 
-  // Remove this code once your website is seeded
-  if (!page && slug === 'home') {
+  // Force use of static content for home page (Spiess Technologies content)
+  if (slug === 'home') {
     page = homeStatic
   }
 
