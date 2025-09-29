@@ -1,5 +1,6 @@
 import React from 'react'
 import { Header } from '@/components/Header'
+import { HeroImageToggle } from '@/components/HeroImageToggle'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
@@ -19,7 +20,11 @@ export default async function HomeProfessionalPage() {
       <Header variant="professional" />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#2C3E51] to-[#62708A] text-white">
+      <HeroImageToggle
+        heroImageUrl={typeof home.hero?.heroImage === 'object' && home.hero?.heroImage?.url ? home.hero.heroImage.url : undefined}
+        className="relative bg-gradient-to-br from-[#2C3E51] to-[#62708A] text-white"
+        darkOverlay={true}
+      >
         <div className="container max-w-7xl py-20 lg:py-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -63,7 +68,7 @@ export default async function HomeProfessionalPage() {
             </div>
           </div>
         </div>
-      </section>
+      </HeroImageToggle>
 
       {/* Who We Serve */}
       {home.whoWeServe && home.whoWeServe.length > 0 && (

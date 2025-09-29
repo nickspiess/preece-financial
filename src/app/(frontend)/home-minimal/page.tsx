@@ -41,7 +41,11 @@ export default async function MinimalHomePage() {
       <Header variant="minimal" />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-gray-100 to-slate-100">
+      <HeroImageToggle
+        heroImageUrl={typeof home.hero?.heroImage === 'object' && home.hero?.heroImage?.url ? home.hero.heroImage.url : undefined}
+        className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-gray-100 to-slate-100"
+        darkOverlay={false}
+      >
         {/* Elegant circular elements */}
         <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-[#62708A]/10 to-[#95997D]/5 rounded-full blur-xl"></div>
         <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-[#95997D]/8 to-[#62708A]/3 rounded-full blur-lg"></div>
@@ -70,16 +74,6 @@ export default async function MinimalHomePage() {
         <div className="absolute bottom-1/3 left-1/3 w-1 h-8 bg-[#A1B5B8]/15 rounded-full"></div>
         <div className="absolute top-1/2 right-1/4 w-4 h-1 bg-[#62708A]/15 rounded-full"></div>
 
-        {/* Image toggle button - only show if image exists */}
-        {typeof home.hero?.heroImage === 'object' && home.hero?.heroImage?.url && (
-          <button
-            className="absolute top-4 right-4 z-20 px-3 py-2 bg-white/90 hover:bg-white text-gray-600 border border-gray-200 hover:border-gray-300 transition-all duration-200 text-xs font-medium shadow-lg rounded backdrop-blur-sm"
-            title="Toggle background image"
-          >
-            🖼️ Show Image
-          </button>
-        )}
-
         <div className="container max-w-7xl relative z-10">
           <div className="min-h-[85vh] flex items-center justify-center py-20">
             <div className="text-center max-w-4xl relative">
@@ -106,7 +100,7 @@ export default async function MinimalHomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </HeroImageToggle>
 
       {/* Who We Serve Section */}
       {home.whoWeServe && home.whoWeServe.length > 0 && (
