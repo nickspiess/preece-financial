@@ -309,7 +309,7 @@ export default async function MinimalHomePage() {
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <img src="/media/pfs.webp" alt="Preece Financial" className="w-14 h-14 object-contain opacity-80" />
+                <img src="/media/pfp.png" alt="Preece Financial" className="w-14 h-14 object-contain opacity-80" />
                 <div className="font-light text-lg tracking-tight text-white/80">
                   PREECE FINANCIAL SERVICES
                 </div>
