@@ -14,17 +14,26 @@ export default async function HomeProfessionalPage() {
 
   const home = homeData.docs[0]
 
-  return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <Header variant="professional" />
+  // Preload hero image
+  const heroImageUrl = typeof home.hero?.heroImage === 'object' && home.hero?.heroImage?.url ? home.hero.heroImage.url : undefined
 
-      {/* Hero Section */}
-      <HeroImageToggle
-        heroImageUrl={typeof home.hero?.heroImage === 'object' && home.hero?.heroImage?.url ? home.hero.heroImage.url : undefined}
-        className="relative bg-gradient-to-br from-[#2C3E51] to-[#62708A] text-white"
-        darkOverlay={true}
-      >
+  return (
+    <>
+      {/* Preload critical hero image */}
+      {heroImageUrl && (
+        <link rel="preload" as="image" href={heroImageUrl} />
+      )}
+
+      <div className="min-h-screen bg-white">
+        {/* Header */}
+        <Header variant="professional" />
+
+        {/* Hero Section */}
+        <HeroImageToggle
+          heroImageUrl={heroImageUrl}
+          className="relative bg-gradient-to-br from-[#2C3E51] to-[#62708A] text-white"
+          darkOverlay={true}
+        >
         <div className="container max-w-7xl py-20 lg:py-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -43,7 +52,7 @@ export default async function HomeProfessionalPage() {
                 </button>
               </div>
             </div>
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-8 lg:p-10">
+            <div className="bg-white/20 backdrop-blur-md border border-white/30 p-8 lg:p-10">
               <h3 className="text-2xl font-light mb-6">Get Started Today</h3>
               <form className="space-y-4">
                 <input
@@ -74,11 +83,11 @@ export default async function HomeProfessionalPage() {
       {home.whoWeServe && home.whoWeServe.length > 0 && (
         <section className="py-20 lg:py-24">
           <div className="container max-w-7xl">
-            <div className="mb-16">
+            <div className="mb-16 text-center">
               <h2 className="text-4xl lg:text-5xl font-light text-[#2C3E51] tracking-tight mb-4">
                 Who We Serve
               </h2>
-              <div className="w-24 h-px bg-[#62708A]"></div>
+              <div className="w-24 h-px bg-[#62708A] mx-auto"></div>
             </div>
 
             <div className="grid grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -102,7 +111,7 @@ export default async function HomeProfessionalPage() {
                         <h3 className="text-xl font-light text-[#2C3E51] mb-3 tracking-tight">
                           {item.title || 'Service'}
                         </h3>
-                        <p className="text-[#95997D] leading-relaxed text-sm">
+                        <p className="text-gray-600 leading-relaxed text-sm">
                           {item.description || ''}
                         </p>
                       </div>
@@ -119,11 +128,11 @@ export default async function HomeProfessionalPage() {
       {home.services && home.services.length > 0 && (
         <section className="py-20 lg:py-24 bg-gray-50">
           <div className="container max-w-7xl">
-            <div className="mb-16">
+            <div className="mb-16 text-center">
               <h2 className="text-4xl lg:text-5xl font-light text-[#2C3E51] tracking-tight mb-4">
                 Our Services
               </h2>
-              <div className="w-24 h-px bg-[#95997D]"></div>
+              <div className="w-24 h-px bg-[#95997D] mx-auto"></div>
             </div>
 
             <div className="grid lg:grid-cols-3 gap-6">
@@ -139,7 +148,7 @@ export default async function HomeProfessionalPage() {
                     <h3 className="text-2xl font-light text-[#2C3E51] mb-4 tracking-tight">
                       {service.title || 'Service'}
                     </h3>
-                    <p className="text-[#95997D] leading-relaxed">
+                    <p className="text-gray-600 leading-relaxed">
                       {service.description || ''}
                     </p>
                   </div>
@@ -153,40 +162,41 @@ export default async function HomeProfessionalPage() {
       {/* About */}
       {home.about && (
         <section className="py-20 lg:py-24">
-          <div className="container max-w-7xl">
-            <div className="mb-16">
-              <h2 className="text-4xl lg:text-5xl font-light text-[#2C3E51] tracking-tight mb-4">
+          <div className="container max-w-6xl">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl lg:text-5xl font-light text-[#2C3E51] tracking-tight mb-6">
                 About Preece Financial
               </h2>
-              <div className="w-24 h-px bg-[#62708A]"></div>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-12">
-              <div>
+              <div className="w-24 h-px bg-[#62708A] mx-auto mb-8"></div>
+              <div className="max-w-4xl mx-auto">
                 <h3 className="text-3xl font-light text-[#2C3E51] mb-6 tracking-tight">
                   {home.about.heading}
                 </h3>
-                <p className="text-xl text-[#95997D] leading-relaxed mb-6">
-                  {home.about.description1}
-                </p>
-                <p className="text-lg text-[#95997D]/80 leading-relaxed">
-                  {home.about.description2}
-                </p>
+                <div className="space-y-6">
+                  <p className="text-xl text-gray-700 leading-relaxed">
+                    {home.about.description1}
+                  </p>
+                  <p className="text-lg text-gray-600 leading-relaxed">
+                    {home.about.description2}
+                  </p>
+                </div>
               </div>
-              <div className="space-y-6">
+            </div>
+            <div className="max-w-5xl mx-auto">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {home.about.categories?.map((category: any, index: number) => {
                   const colors = ['#62708A', '#95997D', '#85896D']
                   const borderColor = colors[index % colors.length]
                   return (
                     <div
                       key={`category-${index}`}
-                      className="border-l-4 pl-6 py-4"
-                      style={{ borderLeftColor: borderColor }}
+                      className="bg-white p-8 rounded-xl shadow-lg border-t-4 text-center hover:shadow-xl transition-shadow"
+                      style={{ borderTopColor: borderColor }}
                     >
-                      <h4 className="text-xl font-semibold text-[#2C3E51] mb-2">
+                      <h4 className="text-xl font-semibold text-[#2C3E51] mb-4">
                         {category.title || 'Category'}
                       </h4>
-                      <p className="text-[#95997D] leading-relaxed">
+                      <p className="text-gray-600 leading-relaxed text-base">
                         {category.description || ''}
                       </p>
                     </div>
@@ -202,11 +212,11 @@ export default async function HomeProfessionalPage() {
       {home.team && home.team.length > 0 && (
         <section className="py-20 lg:py-24 bg-gray-50">
           <div className="container max-w-7xl">
-            <div className="mb-16">
+            <div className="mb-16 text-center">
               <h2 className="text-4xl lg:text-5xl font-light text-[#2C3E51] tracking-tight mb-4">
                 Our Team
               </h2>
-              <div className="w-24 h-px bg-[#62708A]"></div>
+              <div className="w-24 h-px bg-[#62708A] mx-auto"></div>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -227,7 +237,7 @@ export default async function HomeProfessionalPage() {
                         {member.name || 'Team Member'}
                         {member.credentials && `, ${member.credentials}`}
                       </h4>
-                      <p className="text-[#62708A]">
+                      <p className="text-gray-600">
                         {member.title || 'Position'}
                       </p>
                     </div>
@@ -273,14 +283,19 @@ export default async function HomeProfessionalPage() {
                           <h4 className="text-2xl font-semibold text-[#2C3E51] mb-2">
                             {tier.name}
                           </h4>
-                          <div className="text-3xl font-light text-[#62708A] mb-6">
+                          <div className="text-3xl font-light text-gray-700 mb-4">
                             {tier.price}
                           </div>
+                          {tier.description && (
+                            <p className="text-gray-600 mb-6 leading-relaxed">
+                              {tier.description}
+                            </p>
+                          )}
                           <ul className="space-y-3 mb-8">
                             {tier.features?.map((feature: string, i: number) => (
                               <li key={i} className="flex items-start">
                                 <span className="text-[#62708A] mr-2">✓</span>
-                                <span className="text-[#95997D]">{feature}</span>
+                                <span className="text-gray-600">{feature}</span>
                               </li>
                             ))}
                           </ul>
@@ -336,6 +351,7 @@ export default async function HomeProfessionalPage() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   )
 }

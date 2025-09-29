@@ -35,17 +35,26 @@ export default async function MinimalHomePage() {
     )
   }
 
-  return (
-    <div className="min-h-screen bg-white">
-      {/* Header Navigation */}
-      <Header variant="minimal" />
+  // Preload hero image
+  const heroImageUrl = typeof home.hero?.heroImage === 'object' && home.hero?.heroImage?.url ? home.hero.heroImage.url : undefined
 
-      {/* Hero Section */}
-      <HeroImageToggle
-        heroImageUrl={typeof home.hero?.heroImage === 'object' && home.hero?.heroImage?.url ? home.hero.heroImage.url : undefined}
-        className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-gray-100 to-slate-100"
-        darkOverlay={false}
-      >
+  return (
+    <>
+      {/* Preload critical hero image */}
+      {heroImageUrl && (
+        <link rel="preload" as="image" href={heroImageUrl} />
+      )}
+
+      <div className="min-h-screen bg-white">
+        {/* Header Navigation */}
+        <Header variant="minimal" />
+
+        {/* Hero Section */}
+        <HeroImageToggle
+          heroImageUrl={heroImageUrl}
+          className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-gray-100 to-slate-100"
+          darkOverlay={false}
+        >
         {/* Elegant circular elements */}
         <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-[#62708A]/10 to-[#95997D]/5 rounded-full blur-xl"></div>
         <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-[#95997D]/8 to-[#62708A]/3 rounded-full blur-lg"></div>
@@ -88,7 +97,7 @@ export default async function MinimalHomePage() {
                   {home.hero?.heading || 'Preece Financial Services'}
                 </div>
               </h1>
-              <p className="text-2xl text-[#95997D] mb-12 leading-relaxed">
+              <p className="text-2xl text-gray-700 mb-12 leading-relaxed">
                 {home.hero?.tagline || 'Helping your money make sense (and dollars)'}
               </p>
               <button className="px-12 py-4 bg-[#62708A] text-white hover:bg-[#85896D] transition-all duration-300 text-sm tracking-wider shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
@@ -127,7 +136,7 @@ export default async function MinimalHomePage() {
                   </div>
                   <div className="p-4">
                     <h3 className="text-2xl font-light mb-4 text-[#2C3E51]">{item.title}</h3>
-                    <p className="text-[#95997D] leading-relaxed whitespace-pre-line">{item.description}</p>
+                    <p className="text-gray-600 leading-relaxed whitespace-pre-line">{item.description}</p>
                   </div>
                 </div>
               ))}
@@ -172,31 +181,33 @@ export default async function MinimalHomePage() {
 
       {/* About Section */}
       {home.about && (
-        <div id="about" className="container max-w-7xl py-32 bg-white">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-light text-[#2C3E51] mb-6 leading-tight tracking-tight">
-                {home.about.heading}
-              </h2>
-              <div className="w-20 h-px bg-[#62708A] mb-8"></div>
-              <p className="text-xl text-[#95997D] leading-relaxed mb-6">
+        <div id="about" className="container max-w-6xl py-32 bg-white">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-light text-[#2C3E51] mb-6 leading-tight tracking-tight">
+              {home.about.heading}
+            </h2>
+            <div className="w-20 h-px bg-[#62708A] mx-auto mb-8"></div>
+            <div className="max-w-4xl mx-auto space-y-6">
+              <p className="text-xl text-gray-700 leading-relaxed">
                 {home.about.description1}
               </p>
-              <p className="text-lg text-[#95997D] leading-relaxed">
+              <p className="text-lg text-gray-600 leading-relaxed">
                 {home.about.description2}
               </p>
             </div>
-            <div className="space-y-6">
+          </div>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {home.about.categories && home.about.categories.map((category: any, index: number) => {
                 const colors = ['#62708A', '#95997D', '#A1B5B8']
                 const color = colors[index % colors.length]
                 return (
-                  <div key={index} className="bg-gradient-to-br p-8 rounded border-l-4" style={{
+                  <div key={index} className="bg-gradient-to-br p-8 rounded-xl border-l-4 text-center" style={{
                     background: `linear-gradient(to bottom right, ${color}1A, #E3D3BD4D)`,
                     borderLeftColor: color
                   }}>
-                    <h3 className="text-2xl font-light text-[#2C3E51] mb-3">{category.title}</h3>
-                    <p className="text-[#95997D] leading-relaxed">{category.description}</p>
+                    <h3 className="text-2xl font-semibold text-[#2C3E51] mb-4">{category.title}</h3>
+                    <p className="text-gray-600 leading-relaxed text-base">{category.description}</p>
                   </div>
                 )
               })}
@@ -239,7 +250,7 @@ export default async function MinimalHomePage() {
                       <h4 className="text-lg font-medium text-[#2C3E51] mb-1 text-center leading-tight">
                         {member.name}{member.credentials ? `, ${member.credentials}` : ''}
                       </h4>
-                      <p className="text-sm text-[#95997D] text-center font-medium">{member.title}</p>
+                      <p className="text-sm text-gray-600 text-center font-medium">{member.title}</p>
                     </div>
                   </div>
                 )
@@ -273,7 +284,7 @@ export default async function MinimalHomePage() {
           <div className="container max-w-7xl py-32">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-6xl font-light mb-8 leading-tight">{home.contact.heading}</h2>
-              <p className="text-xl mb-12 text-[#A1B5B8] leading-relaxed">
+              <p className="text-xl mb-12 text-gray-300 leading-relaxed">
                 {home.contact.description}
               </p>
               <form className="flex flex-col md:flex-row gap-4 max-w-2xl mx-auto mb-8">
@@ -298,12 +309,12 @@ export default async function MinimalHomePage() {
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <img src="/media/pfs.webp" alt="Preece Financial" className="w-10 h-10 object-contain opacity-80" />
+                <img src="/media/pfp.png" alt="Preece Financial" className="w-14 h-14 object-contain opacity-80" />
                 <div className="font-light text-lg tracking-tight text-white/80">
-                  PREECE
+                  PREECE FINANCIAL SERVICES
                 </div>
               </div>
-              <p className="text-sm text-[#A1B5B8] leading-relaxed">
+              <p className="text-sm text-gray-400 leading-relaxed">
                 Helping your money make sense (and dollars)
               </p>
             </div>
@@ -352,6 +363,7 @@ export default async function MinimalHomePage() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   )
 }

@@ -9,7 +9,7 @@ export const NatureTheme: React.FC = () => {
         <div className="container max-w-7xl">
           <div className="flex items-center justify-between py-5">
             <div className="flex items-center gap-3">
-              <img src="/media/pfs.webp" alt="Preece Financial" className="w-12 h-12 object-contain" />
+              <img src="/media/pfp.png" alt="Preece Financial" className="w-12 h-12 object-contain" />
               <div>
                 <div className="font-bold text-[#2C3E51] text-xl">Preece Financial</div>
                 <div className="text-xs text-[#62708A]">Growing Together</div>

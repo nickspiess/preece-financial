@@ -34,7 +34,7 @@ export const NaturalPricingSection: React.FC<NaturalPricingSectionProps> = ({
             </span>
           )}
         </h3>
-        <p className="text-[#62708A] max-w-2xl mx-auto leading-relaxed">{description}</p>
+        <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">{description}</p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -79,7 +79,7 @@ const NaturalPricingCard: React.FC<{ tier: PricingTier; color: string; index: nu
           style={{ backgroundColor: color }}
         ></div>
         <h4 className="text-xl font-medium text-[#2C3E51] mb-4">{tier.name}</h4>
-        <p className="text-[#62708A] mb-8 leading-relaxed min-h-[60px]">{tier.description}</p>
+        <p className="text-gray-600 mb-8 leading-relaxed min-h-[60px]">{tier.description}</p>
         <NaturalPricingButton color={color} text="Contact Us" fullWidth />
       </div>
     </div>

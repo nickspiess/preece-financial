@@ -35,24 +35,33 @@ export default async function NaturalHomePage() {
     )
   }
 
-  return (
-    <div className="min-h-screen bg-[#F5F2E8]">
-      {/* Header Navigation */}
-      <Header variant="natural" />
+  // Preload hero image
+  const heroImageUrl = typeof home.hero?.heroImage === 'object' && home.hero?.heroImage?.url ? home.hero.heroImage.url : undefined
 
-      {/* Hero Section */}
-      <HeroImageToggle
-        heroImageUrl={typeof home.hero?.heroImage === 'object' && home.hero?.heroImage?.url ? home.hero.heroImage.url : undefined}
-        className="relative overflow-hidden"
-        darkOverlay={false}
-      >
+  return (
+    <>
+      {/* Preload critical hero image */}
+      {heroImageUrl && (
+        <link rel="preload" as="image" href={heroImageUrl} />
+      )}
+
+      <div className="min-h-screen bg-[#F5F2E8]">
+        {/* Header Navigation */}
+        <Header variant="natural" />
+
+        {/* Hero Section */}
+        <HeroImageToggle
+          heroImageUrl={heroImageUrl}
+          className="relative overflow-hidden"
+          darkOverlay={false}
+        >
         <div className="container max-w-7xl py-20 relative z-10">
           <div className="grid lg:grid-cols-[1fr,350px] gap-16 items-center">
-            <div className="space-y-8">
-              <h1 className="text-5xl lg:text-6xl font-light text-[#2C3E51] leading-tight">
+            <div className="space-y-6">
+              <h1 className="text-5xl lg:text-6xl font-bold text-[#2C3E51] leading-tight drop-shadow-sm mb-4">
                 {home.hero?.heading || 'Preece Financial Services'}
               </h1>
-              <p className="text-xl text-[#62708A] leading-relaxed max-w-2xl">
+              <p className="text-xl text-gray-700 leading-relaxed max-w-2xl mb-8">
                 {home.hero?.tagline || 'Helping your money make sense (and dollars)'}
               </p>
               <div className="flex flex-wrap gap-4">
@@ -105,7 +114,7 @@ export default async function NaturalHomePage() {
         <div className="py-20 bg-white">
           <div className="container max-w-7xl">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-light text-[#2C3E51] mb-4">Who We Serve</h2>
+              <h2 className="text-5xl font-bold text-[#2C3E51] mb-4">Who We Serve</h2>
               <div className="w-20 h-1 bg-[#95997D] mx-auto rounded-full"></div>
             </div>
 
@@ -130,7 +139,7 @@ export default async function NaturalHomePage() {
                     </div>
                     <div className={`flex-1 ${isLeft ? 'text-left' : 'text-right'}`}>
                       <h3 className="text-xl font-medium text-[#2C3E51] mb-2">{item.title}</h3>
-                      <p className="text-[#62708A] leading-relaxed text-sm">{item.description}</p>
+                      <p className="text-gray-600 leading-relaxed text-sm">{item.description}</p>
                     </div>
                   </div>
                 )
@@ -145,7 +154,7 @@ export default async function NaturalHomePage() {
         <div id="services" className="py-20 bg-gradient-to-br from-[#F5F2E8] to-[#95997D]/5">
           <div className="container max-w-7xl">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-light text-[#2C3E51] mb-4">Our Services</h2>
+              <h2 className="text-5xl font-bold text-[#2C3E51] mb-4">Our Services</h2>
               <div className="w-20 h-1 bg-[#95997D] mx-auto rounded-full"></div>
             </div>
 
@@ -166,29 +175,24 @@ export default async function NaturalHomePage() {
       {/* About Section */}
       {home.about && (
         <div id="about" className="py-20 bg-white">
-          <div className="container max-w-7xl">
-            <div className="grid lg:grid-cols-[1fr,1fr] gap-16 items-center">
-              <div>
-                <h2 className="text-4xl font-light text-[#2C3E51] mb-8">{home.about.heading}</h2>
-                <div className="space-y-6">
-                  <p className="text-lg text-[#62708A] leading-relaxed">{home.about.description1}</p>
-                  <p className="text-[#62708A] leading-relaxed">{home.about.description2}</p>
-                </div>
+          <div className="container max-w-6xl">
+            <div className="text-center mb-16">
+              <h2 className="text-5xl lg:text-6xl font-bold text-[#2C3E51] mb-8">{home.about.heading}</h2>
+              <div className="w-20 h-1 bg-[#95997D] mx-auto rounded-full mb-8"></div>
+              <div className="max-w-4xl mx-auto space-y-6">
+                <p className="text-xl text-gray-700 leading-relaxed">{home.about.description1}</p>
+                <p className="text-lg text-gray-600 leading-relaxed">{home.about.description2}</p>
               </div>
-              <div className="space-y-8">
+            </div>
+            <div className="max-w-4xl mx-auto">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {home.about.categories?.map((category: any, index: number) => {
                   const colors = ['#95997D', '#62708A', '#A1B5B8']
                   const color = colors[index % colors.length]
                   return (
-                    <div key={index} className="relative">
-                      <div
-                        className="absolute left-0 top-0 w-1 h-full rounded-full"
-                        style={{ backgroundColor: color }}
-                      ></div>
-                      <div className="pl-8">
-                        <h4 className="text-xl font-medium text-[#2C3E51] mb-3">{category.title}</h4>
-                        <p className="text-[#62708A] leading-relaxed">{category.description}</p>
-                      </div>
+                    <div key={index} className="bg-white p-8 rounded-2xl shadow-lg border-t-4 text-center hover:shadow-xl transition-shadow" style={{ borderTopColor: color }}>
+                      <h4 className="text-xl font-semibold text-[#2C3E51] mb-4">{category.title}</h4>
+                      <p className="text-gray-600 leading-relaxed text-base">{category.description}</p>
                     </div>
                   )
                 })}
@@ -203,14 +207,12 @@ export default async function NaturalHomePage() {
         <div id="team" className="py-20 bg-gradient-to-br from-[#F5F2E8] to-[#95997D]/5">
           <div className="container max-w-7xl">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-light text-[#2C3E51] mb-4">Our Team</h2>
+              <h2 className="text-5xl font-bold text-[#2C3E51] mb-4">Our Team</h2>
               <div className="w-20 h-1 bg-[#95997D] mx-auto rounded-full"></div>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 max-w-md mx-auto">
+            <div className="grid grid-cols-2 gap-10 max-w-lg mx-auto">
               {home.team.map((member: any, index: number) => {
-                const colors = ['#95997D', '#62708A', '#A1B5B8', '#2C3E51']
-                const color = colors[index % colors.length]
                 return (
                   <div key={index} className="group">
                     <div className="relative">
@@ -230,7 +232,7 @@ export default async function NaturalHomePage() {
                         <h4 className="text-lg font-medium text-[#2C3E51] mb-1">
                           {member.name}{member.credentials ? `, ${member.credentials}` : ''}
                         </h4>
-                        <p className="text-sm font-medium" style={{ color }}>{member.title}</p>
+                        <p className="text-sm font-medium text-[#95997D]">{member.title}</p>
                       </div>
                     </div>
                   </div>
@@ -246,7 +248,7 @@ export default async function NaturalHomePage() {
         <div id="pricing" className="py-20 bg-white">
           <div className="container max-w-7xl">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-light text-[#2C3E51] mb-4">Pricing Plans</h2>
+              <h2 className="text-5xl font-bold text-[#2C3E51] mb-4">Pricing Plans</h2>
               <div className="w-20 h-1 bg-[#95997D] mx-auto rounded-full"></div>
             </div>
 
@@ -325,13 +327,11 @@ export default async function NaturalHomePage() {
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#95997D] to-[#62708A] rounded-full flex items-center justify-center">
-                  <img src="/media/pfs.webp" alt="Preece Financial" className="w-6 h-6 object-contain opacity-90" />
-                </div>
-                <div className="font-medium text-lg">PREECE</div>
+                <img src="/media/pfp.png" alt="Preece Financial" className="w-14 h-14 object-contain" />
+                <div className="font-medium text-lg">PREECE FINANCIAL SERVICES</div>
               </div>
               <p className="text-white/70 leading-relaxed text-sm">
-                Naturally growing your financial future with care and expertise.
+                Helping your money make sense (and dollars)
               </p>
             </div>
 
@@ -379,6 +379,7 @@ export default async function NaturalHomePage() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   )
 }

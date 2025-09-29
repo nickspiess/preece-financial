@@ -9,7 +9,7 @@ export const BoldTheme: React.FC = () => {
         <div className="container max-w-6xl">
           <div className="flex items-center justify-between py-5">
             <div className="flex items-center gap-3">
-              <img src="/media/pfs.webp" alt="Preece Financial" className="w-10 h-10 object-contain" />
+              <img src="/media/pfp.png" alt="Preece Financial" className="w-10 h-10 object-contain" />
               <div className="font-black text-2xl tracking-tight">PREECE</div>
             </div>
             <div className="hidden md:flex items-center gap-8">

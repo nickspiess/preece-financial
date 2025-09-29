@@ -32,16 +32,17 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ title, description, ho
           </h3>
           <p
             className="leading-relaxed transition-colors"
-            style={{ color: isHovered ? 'rgba(255, 255, 255, 0.9)' : '#95997D' }}
+            style={{ color: isHovered ? 'rgba(255, 255, 255, 0.9)' : '#525252' }}
           >
             {description}
           </p>
         </div>
         <button
-          className="px-6 py-2 border transition text-sm tracking-wide whitespace-nowrap"
+          className="px-6 py-2 border transition-all duration-300 text-sm tracking-wide whitespace-nowrap hover:shadow-lg"
           style={{
             borderColor: isHovered ? 'white' : '#2C3E51',
             color: isHovered ? 'white' : '#2C3E51',
+            backgroundColor: isHovered ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
           }}
         >
           MORE INFO

@@ -36,7 +36,7 @@ export const NaturalServiceCard: React.FC<NaturalServiceCardProps> = ({ title, d
         </h3>
         <p
           className="leading-relaxed transition-colors"
-          style={{ color: isHovered ? 'rgba(255, 255, 255, 0.9)' : '#62708A' }}
+          style={{ color: isHovered ? 'rgba(255, 255, 255, 0.9)' : '#525252' }}
         >
           {description}
         </p>
