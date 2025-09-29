@@ -9,7 +9,7 @@ export const MinimalTheme: React.FC = () => {
         <div className="container max-w-7xl">
           <div className="flex items-center justify-between py-6">
             <div className="flex items-center gap-3">
-              <img src="/media/pfp.png" alt="Preece Financial" className="w-10 h-10 object-contain" />
+              <img src="/media/pfs.webp" alt="Preece Financial" className="w-10 h-10 object-contain" />
               <div className="font-light text-2xl tracking-tight text-[#2C3E51]">
                 PREECE
               </div>
@@ -420,7 +420,7 @@ export const MinimalTheme: React.FC = () => {
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <img src="/media/pfp.png" alt="Preece Financial" className="w-10 h-10 object-contain opacity-80" />
+                <img src="/media/pfs.webp" alt="Preece Financial" className="w-10 h-10 object-contain opacity-80" />
                 <div className="font-light text-lg tracking-tight text-white/80">
                   PREECE
                 </div>

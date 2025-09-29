@@ -326,7 +326,7 @@ export default async function NaturalHomePage() {
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 bg-gradient-to-br from-[#95997D] to-[#62708A] rounded-full flex items-center justify-center">
-                  <img src="/media/pfp.png" alt="Preece Financial" className="w-6 h-6 object-contain opacity-90" />
+                  <img src="/media/pfs.webp" alt="Preece Financial" className="w-6 h-6 object-contain opacity-90" />
                 </div>
                 <div className="font-medium text-lg">PREECE</div>
               </div>
