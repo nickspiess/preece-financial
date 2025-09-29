@@ -9,7 +9,7 @@ export const ProfessionalTheme: React.FC = () => {
         <div className="container max-w-6xl">
           <div className="flex items-center justify-between py-4">
             <div className="flex items-center gap-2">
-              <img src="/media/pfp.png" alt="Preece Financial" className="w-10 h-10 object-contain" />
+              <img src="/pfp.png" alt="Preece Financial" className="w-10 h-10 object-contain" />
               <div>
                 <div className="font-bold text-[#2C3E51] text-lg leading-tight">Preece Financial</div>
                 <div className="text-xs text-gray-500">Financial Services</div>

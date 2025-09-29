@@ -49,7 +49,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center justify-between py-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-4">
-            <img src="/media/pfp.png" alt="Preece Financial" className="w-16 h-16 object-contain" />
+            <img src="/pfp.png" alt="Preece Financial" className="w-16 h-16 object-contain" />
             <div>
               <div className={`font-bold text-xl ${styles.logoTextClass}`}>PREECE FINANCIAL</div>
               <div className={`text-sm font-medium tracking-wide ${styles.subTextClass}`}>

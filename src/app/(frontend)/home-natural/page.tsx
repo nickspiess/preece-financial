@@ -327,7 +327,7 @@ export default async function NaturalHomePage() {
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div>
               <div className="flex items-center gap-3 mb-6">
-                <img src="/media/pfp.png" alt="Preece Financial" className="w-14 h-14 object-contain" />
+                <img src="/pfp.png" alt="Preece Financial" className="w-14 h-14 object-contain" />
                 <div className="font-medium text-lg">PREECE FINANCIAL SERVICES</div>
               </div>
               <p className="text-white/70 leading-relaxed text-sm">
