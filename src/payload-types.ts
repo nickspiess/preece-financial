@@ -73,7 +73,10 @@ export interface Config {
     categories: Category;
     users: User;
     home: Home;
+    about: About;
+    contact: Contact;
     'custom-pages': CustomPage;
+    services: Service;
     testimonials: Testimonial;
     faqs: Faq;
     redirects: Redirect;
@@ -93,7 +96,10 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     home: HomeSelect<false> | HomeSelect<true>;
+    about: AboutSelect<false> | AboutSelect<true>;
+    contact: ContactSelect<false> | ContactSelect<true>;
     'custom-pages': CustomPagesSelect<false> | CustomPagesSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     faqs: FaqsSelect<false> | FaqsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
@@ -361,6 +367,7 @@ export interface Media {
 export interface Category {
   id: number;
   title: string;
+  description?: string | null;
   slug?: string | null;
   slugLock?: boolean | null;
   parent?: (number | null) | Category;
@@ -753,6 +760,19 @@ export interface Home {
     heading: string;
     tagline: string;
     heroImage?: (number | null) | Media;
+    styling?: {
+      headingSize?:
+        | (
+            | 'text-4xl md:text-5xl lg:text-6xl'
+            | 'text-5xl md:text-6xl lg:text-7xl'
+            | 'text-6xl md:text-7xl lg:text-8xl'
+            | 'text-7xl md:text-8xl lg:text-9xl'
+          )
+        | null;
+      headingWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+      taglineSize?: ('text-base md:text-lg' | 'text-lg md:text-xl' | 'text-xl md:text-2xl') | null;
+      spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+    };
   };
   whoWeServe?:
     | {
@@ -762,6 +782,13 @@ export interface Home {
         id?: string | null;
       }[]
     | null;
+  whoWeServeStyling?: {
+    titleSize?: ('text-2xl' | 'text-3xl' | 'text-4xl') | null;
+    titleWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+    descriptionSize?: ('text-xs' | 'text-sm' | 'text-base') | null;
+    cardPadding?: ('p-6' | 'p-8' | 'p-10') | null;
+    spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+  };
   services?:
     | {
         title: string;
@@ -770,6 +797,12 @@ export interface Home {
         id?: string | null;
       }[]
     | null;
+  servicesStyling?: {
+    titleSize?: ('text-2xl' | 'text-3xl' | 'text-4xl') | null;
+    descriptionSize?: ('text-sm' | 'text-base' | 'text-lg') | null;
+    cardPadding?: ('p-8' | 'p-12' | 'p-16') | null;
+    enableAnimation?: boolean | null;
+  };
   about: {
     heading: string;
     description1: string;
@@ -782,6 +815,13 @@ export interface Home {
         }[]
       | null;
   };
+  aboutStyling?: {
+    headingSize?: ('text-3xl md:text-4xl' | 'text-4xl md:text-5xl' | 'text-5xl md:text-6xl') | null;
+    headingWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+    descriptionSize?: ('text-sm' | 'text-base' | 'text-lg') | null;
+    categoryTitleSize?: ('text-lg' | 'text-xl' | 'text-2xl') | null;
+    spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+  };
   team?:
     | {
         name: string;
@@ -791,6 +831,13 @@ export interface Home {
         id?: string | null;
       }[]
     | null;
+  teamStyling?: {
+    nameSize?: ('text-lg' | 'text-xl' | 'text-2xl') | null;
+    nameWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+    titleSize?: ('text-xs' | 'text-sm' | 'text-base') | null;
+    cardPadding?: ('p-4' | 'p-6' | 'p-8') | null;
+    spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+  };
   pricing?:
     | {
         title: string;
@@ -807,9 +854,24 @@ export interface Home {
         id?: string | null;
       }[]
     | null;
+  pricingStyling?: {
+    titleSize?: ('text-xl' | 'text-2xl' | 'text-3xl') | null;
+    titleWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+    descriptionSize?: ('text-sm' | 'text-base' | 'text-lg') | null;
+    tierNameSize?: ('text-sm' | 'text-base' | 'text-lg') | null;
+    cardPadding?: ('p-6' | 'p-8' | 'p-10') | null;
+    spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+  };
   contact: {
     heading: string;
     description: string;
+  };
+  contactStyling?: {
+    headingSize?: ('text-3xl md:text-4xl' | 'text-4xl md:text-5xl' | 'text-5xl md:text-6xl') | null;
+    headingWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+    descriptionSize?: ('text-sm' | 'text-base' | 'text-lg') | null;
+    inputPadding?: ('px-4 py-3' | 'px-6 py-4' | 'px-8 py-5') | null;
+    spacing?: ('py-12' | 'py-20' | 'py-32') | null;
   };
   /**
    * Drag to reorder sections. Uncheck to hide sections.
@@ -831,6 +893,221 @@ export interface Home {
   };
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * Manage the About page content with easy section-based editing
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about".
+ */
+export interface About {
+  id: number;
+  title: string;
+  hero: {
+    /**
+     * Main heading for the about page
+     */
+    heading: string;
+    /**
+     * Subheading or tagline
+     */
+    subheading?: string | null;
+    heroImage?: (number | null) | Media;
+    styling?: {
+      headingSize?:
+        | ('text-4xl md:text-5xl' | 'text-5xl md:text-6xl lg:text-7xl' | 'text-6xl md:text-7xl lg:text-8xl')
+        | null;
+      headingWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+      subheadingSize?: ('text-base' | 'text-lg md:text-xl' | 'text-xl md:text-2xl') | null;
+      spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+    };
+  };
+  mainStory: {
+    /**
+     * Section heading
+     */
+    heading?: string | null;
+    /**
+     * Your main bio/story content
+     */
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    image?: (number | null) | Media;
+    imagePosition?: ('left' | 'right' | 'top' | 'bottom') | null;
+    /**
+     * Add multiple images for a carousel display on the right side
+     */
+    carouselImages?:
+      | {
+          image: number | Media;
+          id?: string | null;
+        }[]
+      | null;
+    styling?: {
+      headingSize?: ('text-3xl md:text-4xl' | 'text-4xl md:text-5xl' | 'text-5xl md:text-6xl') | null;
+      headingWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+      contentSize?: ('text-sm' | 'text-base' | 'text-lg') | null;
+      backgroundColor?: ('bg-white' | 'bg-gray-50' | 'bg-[#A1B5B8]/10' | 'bg-[#E3D3BD]/20') | null;
+      spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+    };
+  };
+  education: {
+    /**
+     * Section heading
+     */
+    heading?: string | null;
+    /**
+     * Educational background and professional experience
+     */
+    content: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    styling?: {
+      headingSize?: ('text-2xl md:text-3xl' | 'text-3xl md:text-4xl' | 'text-4xl md:text-5xl') | null;
+      headingWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+      contentSize?: ('text-sm' | 'text-base' | 'text-lg') | null;
+      backgroundColor?: ('bg-white' | 'bg-gray-50' | 'bg-[#A1B5B8]/10' | 'bg-[#E3D3BD]/20') | null;
+      spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+    };
+  };
+  showTeam?: boolean | null;
+  /**
+   * Section heading for team members
+   */
+  teamHeading?: string | null;
+  /**
+   * Optional description above team members
+   */
+  teamSubheading?: string | null;
+  /**
+   * Add team members like Brooks, Nolan, and Joe
+   */
+  teamMembers?:
+    | {
+        name: string;
+        credentials?: string | null;
+        title: string;
+        /**
+         * Team member biography
+         */
+        bio?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        image: number | Media;
+        email?: string | null;
+        phone?: string | null;
+        linkedIn?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  teamStyling?: {
+    layout?: ('grid-2' | 'grid-3' | 'grid-4' | 'stacked' | 'horizontal') | null;
+    headingSize?: ('text-3xl md:text-4xl' | 'text-4xl md:text-5xl' | 'text-5xl md:text-6xl') | null;
+    nameSize?: ('text-lg' | 'text-xl' | 'text-2xl') | null;
+    nameWeight?: ('font-normal' | 'font-medium' | 'font-semibold') | null;
+    titleSize?: ('text-xs' | 'text-sm' | 'text-base') | null;
+    bioSize?: ('text-sm' | 'text-base' | 'text-lg') | null;
+    cardPadding?: ('p-6' | 'p-8' | 'p-10') | null;
+    backgroundColor?: ('bg-white' | 'bg-gray-50' | 'bg-[#A1B5B8]/10' | 'bg-[#E3D3BD]/20') | null;
+    spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+  };
+  contactInfo?: {
+    showContactInfo?: boolean | null;
+    heading?: string | null;
+    email?: string | null;
+    phone?: string | null;
+    officeAddress?: string | null;
+    styling?: {
+      backgroundColor?: ('bg-white' | 'bg-gray-50' | 'bg-[#A1B5B8]/10' | 'bg-[#E3D3BD]/20' | 'bg-[#2C3E51]') | null;
+      spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+    };
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage the Contact page content
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact".
+ */
+export interface Contact {
+  id: number;
+  title: string;
+  /**
+   * Main heading for the contact page
+   */
+  heroHeading: string;
+  /**
+   * Optional subheading text
+   */
+  heroSubheading?: string | null;
+  heroImage?: (number | null) | Media;
+  showContactInfo?: boolean | null;
+  /**
+   * Heading above contact methods
+   */
+  contactHeading?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  officeAddress?: string | null;
+  showBooking?: boolean | null;
+  /**
+   * Heading for booking section
+   */
+  bookingHeading?: string | null;
+  /**
+   * Optional description text above the form
+   */
+  bookingDescription?: string | null;
+  /**
+   * Submit button text
+   */
+  buttonText?: string | null;
+  /**
+   * Message shown after successful submission
+   */
+  successMessage?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * Create custom pages using drag-and-drop components. Build professional pages without coding!
@@ -893,6 +1170,20 @@ export interface CustomPage {
            */
           textColor?: ('text-[#2C3E51]' | 'text-[#62708A]' | 'text-[#95997D]' | 'text-white' | 'text-gray-900') | null;
           /**
+           * 📏 Control the size of section headings
+           */
+          headingSize?:
+            | ('text-3xl md:text-4xl' | 'text-4xl md:text-5xl' | 'text-5xl md:text-6xl' | 'text-6xl md:text-7xl')
+            | null;
+          /**
+           * 💪 Set heading font weight
+           */
+          headingWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold' | 'font-bold') | null;
+          /**
+           * 📝 Control body text size
+           */
+          bodyTextSize?: ('text-sm' | 'text-base' | 'text-lg' | 'text-xl') | null;
+          /**
            * 🎯 Choose accent color for buttons, borders, and highlights.
            */
           accentColor?: ('#62708A' | '#85896D' | '#A1B5B8' | '#95997D' | '#2C3E51') | null;
@@ -942,6 +1233,18 @@ export interface CustomPage {
            * ⬜ Create visual breathing room between sections. Use spacers to separate different topics or create dramatic pauses.
            */
           spacerHeight?: ('h-12' | 'h-24' | 'h-48') | null;
+          /**
+           * ✨ Add subtle animations on hover for interactive elements
+           */
+          enableAnimation?: boolean | null;
+          /**
+           * 🌑 Control shadow depth for cards and elevated elements
+           */
+          shadowIntensity?: ('shadow-none' | 'shadow-md' | 'shadow-lg' | 'shadow-2xl') | null;
+          /**
+           * ⬛ Set corner roundness for cards and buttons
+           */
+          borderRadius?: ('rounded-none' | 'rounded-sm' | 'rounded-md' | 'rounded-lg' | 'rounded-xl') | null;
           /**
            * 💬 Select specific testimonials to show, or leave empty to show all testimonials
            */
@@ -1048,6 +1351,136 @@ export interface Faq {
    * 🔢 Order for displaying (0 = first, higher numbers appear later)
    */
   order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage the Services page content with easy section-based editing
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  title: string;
+  hero: {
+    /**
+     * Main heading for the services page
+     */
+    heading: string;
+    /**
+     * Introductory paragraph explaining your services approach
+     */
+    description: string;
+    heroImage?: (number | null) | Media;
+    styling?: {
+      headingSize?:
+        | ('text-4xl md:text-5xl' | 'text-5xl md:text-6xl lg:text-7xl' | 'text-6xl md:text-7xl lg:text-8xl')
+        | null;
+      headingWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+      descriptionSize?: ('text-base' | 'text-lg md:text-xl' | 'text-xl md:text-2xl') | null;
+      spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+    };
+  };
+  /**
+   * Primary action buttons displayed below the hero description
+   */
+  ctaButtons?:
+    | {
+        text: string;
+        link: string;
+        style?: ('primary' | 'secondary' | 'tertiary') | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Your main service offerings (e.g., One-Time Planning, Ongoing Planning, etc.)
+   */
+  serviceOfferings?:
+    | {
+        title: string;
+        /**
+         * Optional badge text (e.g., "Most Popular", "Best Value")
+         */
+        badge?: string | null;
+        /**
+         * Short description of who this is best for
+         */
+        tagline?: string | null;
+        /**
+         * Detailed description of what's included, pricing, etc.
+         */
+        description: string;
+        features?:
+          | {
+              feature?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        /**
+         * Button text for this service
+         */
+        ctaText?: string | null;
+        /**
+         * Link for the service button
+         */
+        ctaLink?: string | null;
+        accentColor?: ('#62708A' | '#85896D' | '#A1B5B8' | '#95997D' | '#C48457') | null;
+        cardStyling?: {
+          titleSize?: ('text-2xl' | 'text-3xl' | 'text-4xl') | null;
+          titleWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+          descriptionSize?: ('text-sm' | 'text-base' | 'text-lg') | null;
+          cardPadding?: ('p-6' | 'p-10' | 'p-12') | null;
+          shadowIntensity?: ('shadow-none' | 'shadow-md' | 'shadow-lg' | 'shadow-2xl') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Other services like accounting, tax prep, etc.
+   */
+  additionalServices?:
+    | {
+        title: string;
+        description: string;
+        features?:
+          | {
+              item?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        ctaText?: string | null;
+        ctaLink?: string | null;
+        backgroundColor?: ('bg-white' | 'bg-gray-50' | 'bg-[#A1B5B8]/10' | 'bg-[#E3D3BD]/20') | null;
+        styling?: {
+          titleSize?: ('text-3xl md:text-4xl' | 'text-4xl md:text-5xl' | 'text-5xl md:text-6xl') | null;
+          titleWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+          descriptionSize?: ('text-sm' | 'text-base' | 'text-lg') | null;
+          spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  showTestimonials?: boolean | null;
+  testimonialsHeading?: string | null;
+  /**
+   * Select specific testimonials or leave empty to show all
+   */
+  selectedTestimonials?: (number | Testimonial)[] | null;
+  testimonialsStyling?: {
+    headingSize?: ('text-3xl md:text-4xl' | 'text-4xl md:text-5xl' | 'text-5xl md:text-6xl') | null;
+    headingWeight?: ('font-light' | 'font-normal' | 'font-medium' | 'font-semibold') | null;
+    quoteSize?: ('text-sm' | 'text-base' | 'text-lg') | null;
+    cardPadding?: ('p-6' | 'p-8' | 'p-10') | null;
+    spacing?: ('py-12' | 'py-20' | 'py-32') | null;
+  };
+  disclaimer?: {
+    showDisclaimer?: boolean | null;
+    /**
+     * Legal disclaimer text to display at bottom of page
+     */
+    disclaimerText?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -1249,8 +1682,20 @@ export interface PayloadLockedDocument {
         value: number | Home;
       } | null)
     | ({
+        relationTo: 'about';
+        value: number | About;
+      } | null)
+    | ({
+        relationTo: 'contact';
+        value: number | Contact;
+      } | null)
+    | ({
         relationTo: 'custom-pages';
         value: number | CustomPage;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
       } | null)
     | ({
         relationTo: 'testimonials';
@@ -1587,6 +2032,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
+  description?: T;
   slug?: T;
   slugLock?: T;
   parent?: T;
@@ -1636,6 +2082,14 @@ export interface HomeSelect<T extends boolean = true> {
         heading?: T;
         tagline?: T;
         heroImage?: T;
+        styling?:
+          | T
+          | {
+              headingSize?: T;
+              headingWeight?: T;
+              taglineSize?: T;
+              spacing?: T;
+            };
       };
   whoWeServe?:
     | T
@@ -1645,6 +2099,15 @@ export interface HomeSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  whoWeServeStyling?:
+    | T
+    | {
+        titleSize?: T;
+        titleWeight?: T;
+        descriptionSize?: T;
+        cardPadding?: T;
+        spacing?: T;
+      };
   services?:
     | T
     | {
@@ -1652,6 +2115,14 @@ export interface HomeSelect<T extends boolean = true> {
         description?: T;
         hoverColor?: T;
         id?: T;
+      };
+  servicesStyling?:
+    | T
+    | {
+        titleSize?: T;
+        descriptionSize?: T;
+        cardPadding?: T;
+        enableAnimation?: T;
       };
   about?:
     | T
@@ -1667,6 +2138,15 @@ export interface HomeSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  aboutStyling?:
+    | T
+    | {
+        headingSize?: T;
+        headingWeight?: T;
+        descriptionSize?: T;
+        categoryTitleSize?: T;
+        spacing?: T;
+      };
   team?:
     | T
     | {
@@ -1675,6 +2155,15 @@ export interface HomeSelect<T extends boolean = true> {
         title?: T;
         image?: T;
         id?: T;
+      };
+  teamStyling?:
+    | T
+    | {
+        nameSize?: T;
+        nameWeight?: T;
+        titleSize?: T;
+        cardPadding?: T;
+        spacing?: T;
       };
   pricing?:
     | T
@@ -1692,11 +2181,30 @@ export interface HomeSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  pricingStyling?:
+    | T
+    | {
+        titleSize?: T;
+        titleWeight?: T;
+        descriptionSize?: T;
+        tierNameSize?: T;
+        cardPadding?: T;
+        spacing?: T;
+      };
   contact?:
     | T
     | {
         heading?: T;
         description?: T;
+      };
+  contactStyling?:
+    | T
+    | {
+        headingSize?: T;
+        headingWeight?: T;
+        descriptionSize?: T;
+        inputPadding?: T;
+        spacing?: T;
       };
   sectionOrder?:
     | T
@@ -1720,6 +2228,135 @@ export interface HomeSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_select".
+ */
+export interface AboutSelect<T extends boolean = true> {
+  title?: T;
+  hero?:
+    | T
+    | {
+        heading?: T;
+        subheading?: T;
+        heroImage?: T;
+        styling?:
+          | T
+          | {
+              headingSize?: T;
+              headingWeight?: T;
+              subheadingSize?: T;
+              spacing?: T;
+            };
+      };
+  mainStory?:
+    | T
+    | {
+        heading?: T;
+        content?: T;
+        image?: T;
+        imagePosition?: T;
+        carouselImages?:
+          | T
+          | {
+              image?: T;
+              id?: T;
+            };
+        styling?:
+          | T
+          | {
+              headingSize?: T;
+              headingWeight?: T;
+              contentSize?: T;
+              backgroundColor?: T;
+              spacing?: T;
+            };
+      };
+  education?:
+    | T
+    | {
+        heading?: T;
+        content?: T;
+        styling?:
+          | T
+          | {
+              headingSize?: T;
+              headingWeight?: T;
+              contentSize?: T;
+              backgroundColor?: T;
+              spacing?: T;
+            };
+      };
+  showTeam?: T;
+  teamHeading?: T;
+  teamSubheading?: T;
+  teamMembers?:
+    | T
+    | {
+        name?: T;
+        credentials?: T;
+        title?: T;
+        bio?: T;
+        image?: T;
+        email?: T;
+        phone?: T;
+        linkedIn?: T;
+        id?: T;
+      };
+  teamStyling?:
+    | T
+    | {
+        layout?: T;
+        headingSize?: T;
+        nameSize?: T;
+        nameWeight?: T;
+        titleSize?: T;
+        bioSize?: T;
+        cardPadding?: T;
+        backgroundColor?: T;
+        spacing?: T;
+      };
+  contactInfo?:
+    | T
+    | {
+        showContactInfo?: T;
+        heading?: T;
+        email?: T;
+        phone?: T;
+        officeAddress?: T;
+        styling?:
+          | T
+          | {
+              backgroundColor?: T;
+              spacing?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_select".
+ */
+export interface ContactSelect<T extends boolean = true> {
+  title?: T;
+  heroHeading?: T;
+  heroSubheading?: T;
+  heroImage?: T;
+  showContactInfo?: T;
+  contactHeading?: T;
+  phone?: T;
+  email?: T;
+  officeAddress?: T;
+  showBooking?: T;
+  bookingHeading?: T;
+  bookingDescription?: T;
+  buttonText?: T;
+  successMessage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "custom-pages_select".
  */
 export interface CustomPagesSelect<T extends boolean = true> {
@@ -1736,6 +2373,9 @@ export interface CustomPagesSelect<T extends boolean = true> {
               backgroundColor?: T;
               padding?: T;
               textColor?: T;
+              headingSize?: T;
+              headingWeight?: T;
+              bodyTextSize?: T;
               accentColor?: T;
               layout?: T;
               heading?: T;
@@ -1745,6 +2385,9 @@ export interface CustomPagesSelect<T extends boolean = true> {
               ctaText?: T;
               ctaLink?: T;
               spacerHeight?: T;
+              enableAnimation?: T;
+              shadowIntensity?: T;
+              borderRadius?: T;
               testimonialsToShow?: T;
               faqsToShow?: T;
               faqCategory?: T;
@@ -1752,6 +2395,107 @@ export interface CustomPagesSelect<T extends boolean = true> {
               showCaptions?: T;
             };
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  title?: T;
+  hero?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        heroImage?: T;
+        styling?:
+          | T
+          | {
+              headingSize?: T;
+              headingWeight?: T;
+              descriptionSize?: T;
+              spacing?: T;
+            };
+      };
+  ctaButtons?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+        style?: T;
+        id?: T;
+      };
+  serviceOfferings?:
+    | T
+    | {
+        title?: T;
+        badge?: T;
+        tagline?: T;
+        description?: T;
+        features?:
+          | T
+          | {
+              feature?: T;
+              id?: T;
+            };
+        ctaText?: T;
+        ctaLink?: T;
+        accentColor?: T;
+        cardStyling?:
+          | T
+          | {
+              titleSize?: T;
+              titleWeight?: T;
+              descriptionSize?: T;
+              cardPadding?: T;
+              shadowIntensity?: T;
+            };
+        id?: T;
+      };
+  additionalServices?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        features?:
+          | T
+          | {
+              item?: T;
+              id?: T;
+            };
+        ctaText?: T;
+        ctaLink?: T;
+        backgroundColor?: T;
+        styling?:
+          | T
+          | {
+              titleSize?: T;
+              titleWeight?: T;
+              descriptionSize?: T;
+              spacing?: T;
+            };
+        id?: T;
+      };
+  showTestimonials?: T;
+  testimonialsHeading?: T;
+  selectedTestimonials?: T;
+  testimonialsStyling?:
+    | T
+    | {
+        headingSize?: T;
+        headingWeight?: T;
+        quoteSize?: T;
+        cardPadding?: T;
+        spacing?: T;
+      };
+  disclaimer?:
+    | T
+    | {
+        showDisclaimer?: T;
+        disclaimerText?: T;
       };
   updatedAt?: T;
   createdAt?: T;

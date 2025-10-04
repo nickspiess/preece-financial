@@ -92,10 +92,22 @@ const config = {
         success: 'hsl(var(--success))',
         error: 'hsl(var(--error))',
         warning: 'hsl(var(--warning))',
+        // Brand color palette
+        brand: {
+          'dark-blue': '#2C3E51',
+          'blue-gray': '#62708A',
+          'warm-gray': '#95997D',
+          'light-blue': '#A1B5B8',
+          'olive': '#85896D',
+          'beige': '#E3D3BD',
+          'leather': '#C48457',
+        },
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
         sans: ['var(--font-geist-sans)'],
+        larken: ['var(--font-larken)', 'serif'],
+        ivymode: ['var(--font-ivymode)', 'sans-serif'],
       },
       keyframes: {
         'accordion-down': {

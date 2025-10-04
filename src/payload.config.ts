@@ -7,13 +7,16 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { About } from './collections/About'
 import { Categories } from './collections/Categories'
+import { Contact } from './collections/Contact'
 import { CustomPages } from './collections/CustomPages'
 import { Faqs } from './collections/Faqs'
 import { Home } from './collections/Home'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
+import { Services } from './collections/Services'
 import { Testimonials } from './collections/Testimonials'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
@@ -37,14 +40,20 @@ console.log('Environment variables:', {
 export default buildConfig({
   admin: {
     components: {
-      // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below.
-      beforeLogin: ['@/components/BeforeLogin'],
+      // Custom branded login page
+      beforeLogin: ['@/components/CustomLogin'],
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeDashboard: ['@/components/BeforeDashboard'],
       afterLogin: ['@/components/ErrorBoundary'],
       beforeNavLinks: ['@/components/GlobalErrorHandler'],
+      afterNavLinks: ['@/components/admin/AnalyticsNavLink'],
+      views: {
+        Analytics: {
+          Component: '@/components/admin/AnalyticsDashboard',
+          path: '/analytics',
+        },
+      },
     },
     importMap: {
       baseDir: path.resolve(dirname),
@@ -81,7 +90,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Home, CustomPages, Testimonials, Faqs],
+  collections: [Pages, Posts, Media, Categories, Users, Home, About, Contact, CustomPages, Services, Testimonials, Faqs],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

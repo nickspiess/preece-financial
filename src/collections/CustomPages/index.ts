@@ -175,6 +175,53 @@ export const CustomPages: CollectionConfig = {
                 description: '✏️ Choose text color to match your brand. Use white for dark backgrounds.',
               },
             },
+            // Typography Controls
+            {
+              name: 'headingSize',
+              type: 'select',
+              label: 'Heading Size',
+              options: [
+                { label: 'Small', value: 'text-3xl md:text-4xl' },
+                { label: 'Medium', value: 'text-4xl md:text-5xl' },
+                { label: 'Large (Default)', value: 'text-5xl md:text-6xl' },
+                { label: 'Extra Large', value: 'text-6xl md:text-7xl' },
+              ],
+              defaultValue: 'text-5xl md:text-6xl',
+              admin: {
+                description: '📏 Control the size of section headings',
+              },
+            },
+            {
+              name: 'headingWeight',
+              type: 'select',
+              label: 'Heading Weight',
+              options: [
+                { label: 'Light', value: 'font-light' },
+                { label: 'Normal (Default)', value: 'font-normal' },
+                { label: 'Medium', value: 'font-medium' },
+                { label: 'Semibold', value: 'font-semibold' },
+                { label: 'Bold', value: 'font-bold' },
+              ],
+              defaultValue: 'font-normal',
+              admin: {
+                description: '💪 Set heading font weight',
+              },
+            },
+            {
+              name: 'bodyTextSize',
+              type: 'select',
+              label: 'Body Text Size',
+              options: [
+                { label: 'Small', value: 'text-sm' },
+                { label: 'Medium (Default)', value: 'text-base' },
+                { label: 'Large', value: 'text-lg' },
+                { label: 'Extra Large', value: 'text-xl' },
+              ],
+              defaultValue: 'text-base',
+              admin: {
+                description: '📝 Control body text size',
+              },
+            },
             {
               name: 'accentColor',
               type: 'select',
@@ -281,6 +328,47 @@ export const CustomPages: CollectionConfig = {
               defaultValue: 'h-24',
               admin: {
                 description: '⬜ Create visual breathing room between sections. Use spacers to separate different topics or create dramatic pauses.',
+              },
+            },
+            // Visual Effects
+            {
+              name: 'enableAnimation',
+              type: 'checkbox',
+              label: 'Enable Hover Animations',
+              defaultValue: true,
+              admin: {
+                description: '✨ Add subtle animations on hover for interactive elements',
+              },
+            },
+            {
+              name: 'shadowIntensity',
+              type: 'select',
+              label: 'Shadow Intensity',
+              options: [
+                { label: 'None', value: 'shadow-none' },
+                { label: 'Light', value: 'shadow-md' },
+                { label: 'Medium (Default)', value: 'shadow-lg' },
+                { label: 'Heavy', value: 'shadow-2xl' },
+              ],
+              defaultValue: 'shadow-lg',
+              admin: {
+                description: '🌑 Control shadow depth for cards and elevated elements',
+              },
+            },
+            {
+              name: 'borderRadius',
+              type: 'select',
+              label: 'Border Radius',
+              options: [
+                { label: 'None (Sharp)', value: 'rounded-none' },
+                { label: 'Small', value: 'rounded-sm' },
+                { label: 'Medium (Default)', value: 'rounded-md' },
+                { label: 'Large', value: 'rounded-lg' },
+                { label: 'Extra Large', value: 'rounded-xl' },
+              ],
+              defaultValue: 'rounded-md',
+              admin: {
+                description: '⬛ Set corner roundness for cards and buttons',
               },
             },
 

@@ -60,14 +60,20 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/home-professional" className={styles.linkClass}>
-              PROFESSIONAL
+            <Link href="/home" className={styles.linkClass}>
+              HOME
             </Link>
-            <Link href="/home-natural" className={styles.linkClass}>
-              NATURAL
+            <Link href="/home#services" className={styles.linkClass}>
+              SERVICES
             </Link>
-            <Link href="/home-minimal" className={styles.linkClass}>
-              MINIMAL
+            <Link href="/home#about" className={styles.linkClass}>
+              ABOUT
+            </Link>
+            <Link href="/blog" className={styles.linkClass}>
+              BLOG
+            </Link>
+            <Link href="/home#contact" className={styles.linkClass}>
+              CONTACT
             </Link>
             <a href="/admin" className={styles.buttonClass}>
               ADMIN

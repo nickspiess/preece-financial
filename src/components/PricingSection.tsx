@@ -24,16 +24,16 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 }) => {
   return (
     <div>
-      <h2 className="text-5xl font-light text-[#2C3E51] mb-6 text-center leading-tight">
+      <h2 className="text-4xl md:text-5xl font-larken font-medium text-[#2C3E51] mb-6 text-center leading-tight">
         {title}
         {subtitle && (
-          <span className="font-semibold" style={{ color }}>
+          <span className="font-larken font-semibold" style={{ color }}>
             {' '}
             {subtitle}
           </span>
         )}
       </h2>
-      <p className="text-center text-gray-600 mb-16 max-w-3xl mx-auto text-lg leading-relaxed">{description}</p>
+      <p className="text-center font-sans text-gray-600 mb-12 max-w-3xl mx-auto text-base leading-relaxed">{description}</p>
 
       <div className="grid md:grid-cols-3 gap-8 mb-12">
         {tiers.map((tier, index) => (
@@ -43,7 +43,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
       <div className="flex justify-center gap-4">
         <button
-          className="px-10 py-3 text-white transition text-sm tracking-wide"
+          className="px-8 py-3 text-white transition text-xs tracking-wide font-sans font-semibold"
           style={{ backgroundColor: color }}
         >
           START YOUR PLAN
@@ -64,8 +64,8 @@ const PricingCard: React.FC<{ tier: PricingTier; color: string }> = ({ tier, col
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <h3 className="text-2xl font-semibold text-[#2C3E51] mb-6">{tier.name}</h3>
-      <p className="text-base text-gray-600 mb-8 leading-relaxed min-h-[80px]">{tier.description}</p>
+      <h3 className="text-xl font-larken font-medium text-[#2C3E51] mb-4">{tier.name}</h3>
+      <p className="text-sm font-sans text-gray-600 mb-6 leading-relaxed min-h-[60px]">{tier.description}</p>
       <PricingButton color={color} text="CONTACT US" fullWidth />
     </div>
   )
@@ -80,7 +80,7 @@ const PricingButton: React.FC<{ color: string; text: string; fullWidth?: boolean
 
   return (
     <button
-      className={`px-10 py-4 border-2 transition font-semibold text-sm tracking-wide rounded-lg ${fullWidth ? 'w-full' : ''}`}
+      className={`px-8 py-3 border-2 transition font-sans font-semibold text-xs tracking-wide rounded-lg ${fullWidth ? 'w-full' : ''}`}
       style={{
         borderColor: color,
         backgroundColor: isHovered ? color : 'transparent',
